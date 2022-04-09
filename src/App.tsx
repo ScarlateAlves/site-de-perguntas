@@ -1,26 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Router, RouteComponentProps } from '@reach/router'
+
+import { Home } from './pages/Home';
+import { NewRoom } from './pages/NewRoom';
+import { Room } from './pages/Room';
+
+import { AuthContextProvider } from './contexts/Authcontext'
+
+import './styles/global.scss'
+
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <AuthContextProvider>
+     <Router>
+    <RouterPage path="/" pageComponent={<Home />} />
+    <RouterPage path="/rooms/new" pageComponent={<NewRoom />} />
+    <RouterPage path="/rooms/:id" pageComponent={<Room />} />
+  </Router>
+  </AuthContextProvider>
+   </>
   );
 }
+
+const RouterPage = (
+  props: { pageComponent: JSX.Element } & RouteComponentProps
+) => props.pageComponent;
+   
 
 export default App;
